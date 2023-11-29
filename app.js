@@ -11,12 +11,13 @@ let found = 0;
 
 async function fetchData() {
     const pairRequest = parseInt($('input').val(), 10);
-    let count = 0;
 
+    // Clear the previous game elements
     $('#howManyPairs').remove();
 
     if (!isNaN(pairRequest) && pairRequest > 0) {
         try {
+            // Fetch unique images
             while (arrayOfImages.length < pairRequest) {
                 const data = await fetchSingleImage();
 
@@ -25,11 +26,12 @@ async function fetchData() {
                     arrayOfImages.push(data);
                 }
             }
-
         } catch (error) {
             console.error(error);
         }
     }
+
+    // Start or restart the game
     handleImages();
 }
 
@@ -67,10 +69,10 @@ function cardHolder() {
     $('#cardsHolder').css({
         position: 'absolute',
         top: '100px',
-        backgroundColor: 'slateblue',
+        backgroundColor: '#07125b',
         display: 'flex',
         flexWrap: 'wrap',
-        paddingBottom: '10px',
+        padding: '10px',
         justifyContent: 'center',
         border: '5px solid black',
         borderRadius: '10px',
@@ -98,8 +100,8 @@ function handleImages() {
         let front = $('<img>').addClass('front').attr('src', 'frontCard.png').appendTo(div);
         let back = $('<img>').addClass('back').attr('src', imageUrl).appendTo(div);
 
-        // Attach click event to each card
-        div.click(function() {
+        // Keep track of the card state and the currently displayed image
+        div.click(function () {
             $(this).toggleClass('flipped');
             eventHandlers(pairNum);
         });
@@ -107,60 +109,60 @@ function handleImages() {
         // Append the div to the #cardsHolder
         div.appendTo($('#cardsHolder'));
     }
-    eventHandlers();
+    // eventHandlers();
 }
 
-function eventHandlers() {
-    let allCards = $('.card');
-    let isFirstClick = true;
+// function eventHandlers() {
+//     let allCards = $('.card');
+//     let isFirstClick = true;
 
-    allCards.each(function () {
-        $(this).click(() => {
-            let clickedCard = $(this).find('img');
-            let clickedCardData = parseInt(clickedCard.attr('data'), 10);
+//     allCards.each(function () {
+//         $(this).click(() => {
+//             let clickedCard = $(this).find('img');
+//             let clickedCardData = parseInt(clickedCard.attr('data'), 10);
 
-            if (isFirstClick) {
-                lastCard = clickedCardData;
-            } else {
-                selectedCard = clickedCardData;
+//             if (isFirstClick) {
+//                 lastCard = clickedCardData;
+//             } else {
+//                 selectedCard = clickedCardData;
 
-                if (lastCard === selectedCard) {
-                    found++
-                    clickedCards.push(lastCard, selectedCard);
+//                 if (lastCard === selectedCard) {
+//                     found++
+//                     clickedCards.push(lastCard, selectedCard);
 
-                    // Remove the matched cards
-                    $('.card').each(function () {
-                        let cardData = parseInt($(this).find('img').attr('data'), 10);
-                        if (clickedCards.includes(cardData)) {
-                            $(this).remove();
-                        }
-                    });
+//                     // Remove the matched cards
+//                     $('.card').each(function () {
+//                         let cardData = parseInt($(this).find('img').attr('data'), 10);
+//                         if (clickedCards.includes(cardData)) {
+//                             $(this).remove();
+//                         }
+//                     });
 
-                    // Clear the clicked cards array
-                    clickedCards = [];
+//                     // Clear the clicked cards array
+//                     clickedCards = [];
 
-                    // Update the score
-                    score()
-                }
-            }
+//                     // Update the score
+//                     score()
+//                 }
+//             }
 
-            isFirstClick = !isFirstClick;
+//             isFirstClick = !isFirstClick;
 
-            if (!isFirstClick && lastCard === selectedCard) {
-                lastCard = null;
-            }
-        });
-    });
-}
+//             if (!isFirstClick && lastCard === selectedCard) {
+//                 lastCard = null;
+//             }
+//         });
+//     });
+// }
 
-function score() {
-    let scoreDiv = $('#score');
+// function score() {
+//     let scoreDiv = $('#score');
 
-    if (scoreDiv.length === 0) {
-        // If score does not exist, create a new div
-        scoreDiv = $('<div>').attr('id', 'score').appendTo($('#header'));
-    }
+//     if (scoreDiv.length === 0) {
+//         // If score does not exist, create a new div
+//         scoreDiv = $('<div>').attr('id', 'score').appendTo($('#header'));
+//     }
 
-    // Update score
-    scoreDiv.text(`${found} / ${arrayOfImages.length}`);
-}
+//     // Update score
+//     scoreDiv.text(`${found} / ${arrayOfImages.length}`);
+// }

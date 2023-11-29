@@ -5,7 +5,8 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: gray;
+    background-color: black;
+    color:white;
 }
 
 #header {
@@ -14,11 +15,12 @@ body {
     left: 50;
     width: 90dvw;
     height: 8vh;
-    background-color: #3498db;
-    border: 5px solid black;
+    background-color: #3e049b;
+    border: 5px solid #ff0100;
     text-align: center;
     border-radius: 10px;
     font-size:xx-large;
+    text
 }
 
 #howManyPairs {
@@ -64,8 +66,19 @@ body {
 /* Front and back faces of the card */
 .card .front {
     transform: rotateY(0deg);
+    z-index: 2;
+    border-radius: 20px;
 }
 
 .card .back {
     transform: rotateY(180deg);
+    border-radius: 20px;
+}
+
+.card.flipped .front {
+    transform: rotateY(180deg); /* Hide front image */
+}
+
+.card.flipped .back {
+    transform: rotateY(0deg); /* Show back image */
 }
