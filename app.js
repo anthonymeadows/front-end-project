@@ -91,23 +91,18 @@ function handleImages() {
         let imageUrl = arrayOfImageObjects[i]['url'];
         let pairNum = arrayOfImageObjects[i]['card'];
 
-        //Styling
-        let div = $('<div>').addClass('card').css({
-            margin: '10px',
-            width: '14.2857%',
+        // Create a card container
+        let div = $('<div>').addClass('card');
+
+        // Create elements for front and back of the card
+        let front = $('<img>').addClass('front').attr('src', 'frontCard.png').appendTo(div);
+        let back = $('<img>').addClass('back').attr('src', imageUrl).appendTo(div);
+
+        // Attach click event to each card
+        div.click(function() {
+            $(this).toggleClass('flipped');
+            handleCardClick(pairNum);
         });
-
-        let image = $('<img>');
-
-        //Styling and apply imageUrl
-        image.attr('src', imageUrl).css({
-            border: '5px solid black',
-            borderRadius: '10px',
-            width: '100%',
-            height: '100%',
-        }).appendTo(div);
-
-        image.attr('data', pairNum);
 
         // Append the div to the #cardsHolder
         div.appendTo($('#cardsHolder'));
