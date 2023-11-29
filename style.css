@@ -82,3 +82,9 @@ body {
 .card.flipped .back {
     transform: rotateY(0deg); /* Show back image */
 }
+
+.blank {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}

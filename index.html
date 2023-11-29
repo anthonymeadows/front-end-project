@@ -8,12 +8,16 @@
 </head>
 <body>
     <header id="header"> Welcome to my matching game!</header>
-    <div id = "howManyPairs">
+    <div id="howManyPairs">
         <label for="userInput"> How many pairs would you like?</label>
         <input type="text" id="userInput" placeholder="#">
         <button>Start</button>
     </div>
     <div id="cardsHolder"></div>
+    <audio id="gameStart" src="gameStart.mp3" preload="auto"></audio>
+    <audio id="matchSound" src="nicejob.mp3" preload="auto"></audio>
+    <audio id="allFound" src="allFound.mp3" preload="auto"></audio>
+    <audio id="wrongChoice" src="wrongChoice.mp3" preload="auto"></audio>
     <script defer src="jquery-3.7.1.min.js"></script>
     <script defer src="app.js"></script>
 </body>

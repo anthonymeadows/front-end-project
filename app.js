@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function () {;
     $('button').click(fetchData);
 });
 
@@ -10,6 +10,7 @@ let clickedCards = [];
 let found = 0;
 
 async function fetchData() {
+    gameStart()
     const pairRequest = parseInt($('input').val(), 10);
 
     // Clear the previous game elements
@@ -77,7 +78,7 @@ function cardHolder() {
         border: '5px solid black',
         borderRadius: '10px',
         height: 'max-content',
-        width: '90dvw',
+        width: '90vw', // Corrected the typo in '90dvw' to '90vw'
         gap: '1rem',
         zIndex: '0',
     });
@@ -94,7 +95,7 @@ function handleImages() {
         let pairNum = arrayOfImageObjects[i]['card'];
 
         // Create a card container
-        let div = $('<div>').addClass('card');
+        let div = $('<div>').addClass('card').attr('data-pair', pairNum);
 
         // Create elements for front and back of the card
         let front = $('<img>').addClass('front').attr('src', 'frontCard.png').appendTo(div);
@@ -109,60 +110,70 @@ function handleImages() {
         // Append the div to the #cardsHolder
         div.appendTo($('#cardsHolder'));
     }
-    // eventHandlers();
+    eventHandlers();
 }
 
-// function eventHandlers() {
-//     let allCards = $('.card');
-//     let isFirstClick = true;
+function eventHandlers(pairNum) {
+    let flippedCards = $('.flipped:not(.matched)');
 
-//     allCards.each(function () {
-//         $(this).click(() => {
-//             let clickedCard = $(this).find('img');
-//             let clickedCardData = parseInt(clickedCard.attr('data'), 10);
+    if (flippedCards.length === 2) {
+        // Disable further clicks during the comparison
+        $('#cardsHolder').css('pointer-events', 'none');
 
-//             if (isFirstClick) {
-//                 lastCard = clickedCardData;
-//             } else {
-//                 selectedCard = clickedCardData;
+        let card1 = $(flippedCards[0]);
+        let card2 = $(flippedCards[1]);
 
-//                 if (lastCard === selectedCard) {
-//                     found++
-//                     clickedCards.push(lastCard, selectedCard);
+        if (card1.attr('data-pair') === card2.attr('data-pair')) {
+            // Matched
+            flippedCards.addClass('matched');
+            found++;
 
-//                     // Remove the matched cards
-//                     $('.card').each(function () {
-//                         let cardData = parseInt($(this).find('img').attr('data'), 10);
-//                         if (clickedCards.includes(cardData)) {
-//                             $(this).remove();
-//                         }
-//                     });
+            // Play match sound
+            playMatchSound();
 
-//                     // Clear the clicked cards array
-//                     clickedCards = [];
+            // Check if all pairs are found
+            if (found === arrayOfImages.length) {
+                // All pairs found, handle game end
+                playAllFound()();
+            }
 
-//                     // Update the score
-//                     score()
-//                 }
-//             }
+            // Replace the content with a blank div
+            setTimeout(() => {
+                flippedCards.html('<div class="blank"></div>');
+                // Enable further clicks after replacing content
+                $('#cardsHolder').css('pointer-events', 'auto');
+            }, 1000);
+        } else {
+            wrongChoice()
+            // Not matched, flip back after a delay
+            setTimeout(() => {
+                flippedCards.removeClass('flipped');
+                // Enable further clicks after flipping back
+                $('#cardsHolder').css('pointer-events', 'auto');
+            }, 1000);
+        }
+    }
+}
 
-//             isFirstClick = !isFirstClick;
+function playMatchSound() {
+    // Get the audio element
+    let matchSound = document.getElementById('matchSound');
 
-//             if (!isFirstClick && lastCard === selectedCard) {
-//                 lastCard = null;
-//             }
-//         });
-//     });
-// }
+    // Play the audio
+    matchSound.play();
+}
 
-// function score() {
-//     let scoreDiv = $('#score');
+function playAllFound() {
+    let allFound = document.getElementById('allFound')
+    allFound.play();
+}
 
-//     if (scoreDiv.length === 0) {
-//         // If score does not exist, create a new div
-//         scoreDiv = $('<div>').attr('id', 'score').appendTo($('#header'));
-//     }
+function gameStart() {
+    let gameStart = document.getElementById('gameStart')
+    gameStart.play();
+}
 
-//     // Update score
-//     scoreDiv.text(`${found} / ${arrayOfImages.length}`);
-// }
+function wrongChoice() {
+    let wrongChoice = document.getElementById('wrongChoice')
+    wrongChoice.play();
+}
