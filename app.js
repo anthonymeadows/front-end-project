@@ -137,8 +137,8 @@ function eventHandlers(pairNum) {
                 playAllFound()();
             }
 
-            // Replace the content with a blank div
             setTimeout(() => {
+                // Replace the content with a blank div
                 flippedCards.html('<div class="blank"></div>');
                 // Enable further clicks after replacing content
                 $('#cardsHolder').css('pointer-events', 'auto');
