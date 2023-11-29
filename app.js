@@ -101,7 +101,7 @@ function handleImages() {
         // Attach click event to each card
         div.click(function() {
             $(this).toggleClass('flipped');
-            handleCardClick(pairNum);
+            eventHandlers(pairNum);
         });
 
         // Append the div to the #cardsHolder
