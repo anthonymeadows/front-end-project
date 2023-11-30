@@ -20,7 +20,6 @@ body {
     text-align: center;
     border-radius: 10px;
     font-size:xx-large;
-    text
 }
 
 #howManyPairs {
@@ -48,6 +47,20 @@ body {
     background-color: #45a049;
 }
 
+#score {
+    position: relative;
+    left: 5px;
+    bottom: 35px;
+    width: 8dvw;
+    height: 7dvh;
+    background-color: #3e049b;
+    border: 2px solid white;
+    text-align: center;
+    border-radius: 10px;
+}
+
+
+/* Front and back faces of the card */
 .card {
     position: relative;
     width: 120px;
@@ -63,16 +76,17 @@ body {
     transition: transform 0.5s;
 }
 
-/* Front and back faces of the card */
 .card .front {
     transform: rotateY(0deg);
     z-index: 2;
     border-radius: 20px;
+    border: 3px solid whitesmoke;
 }
 
 .card .back {
     transform: rotateY(180deg);
     border-radius: 20px;
+    border: 3px solid whitesmoke;
 }
 
 .card.flipped .front {
