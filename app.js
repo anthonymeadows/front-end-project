@@ -14,10 +14,10 @@ function match() {
     let found = 0;
 
     async function fetchData() {
+        
         gameStart();
         const pairRequest = parseInt($('#userInput').val(), 10);
         $('#howManyPairs').toggle();
-
         if (!isNaN(pairRequest) && pairRequest > 0) {
             try {
                 while (arrayOfImages.length < pairRequest) {
@@ -38,6 +38,7 @@ function match() {
     async function fetchSingleImage() {
         return new Promise((resolve, reject) => {
             $.get('https://random.imagecdn.app/v1/image?width=120&height=120', (data) => {
+                console.log('Fetched image:', data);
                 resolve(data);
             }).fail((error) => {
                 reject(error);
